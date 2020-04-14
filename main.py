@@ -2,7 +2,7 @@ import time
 import csv
 
 from flask import Flask
-from flask import request,session, redirect, url_for, escape,send_from_directory,make_response 
+from flask import request,session, redirect, url_for, escape,send_from_directory,make_response, render_template
 
 import pymysql 
 import json
