@@ -109,5 +109,4 @@ def download_csv():
 
     
 if __name__ == "__main__":
-    app.secret_key = '1234'
     app.run(host='127.0.0.1',debug=True)
