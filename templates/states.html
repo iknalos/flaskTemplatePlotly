@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<table border="1">
+		<tr>
+			<td>State</td>
+			<td>Count</td>
+		</tr>
+    {% for state in states %}
+		<tr>
+			<td>{{ state[0] }}</td>
+			<td>{{ state[1] }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+	
+{% endblock %}
