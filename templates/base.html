@@ -6,9 +6,27 @@
         <title>Welcome to my example</title>
       {% endif %}
 	  <link rel="stylesheet" type="text/css" href="static/style.css">
+	  <script src="static/plotly-latest.min.js"></script>
+	  
+	  
     </head>
     <body>
         
         {% block content %}{% endblock %}
     </body>
+	<script>
+		var data = [{
+			  values: [1,5,6],
+			  labels: ['Residential', 'Non-Residential', 'Utility'],
+			  type: 'pie'
+			}];
+
+			var layout = {
+			  height: 400,
+			  width: 500
+			};
+
+			Plotly.newPlot('myDiv', data, layout);
+	  
+	  </script>
 </html>
