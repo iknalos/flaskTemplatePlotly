@@ -68,10 +68,51 @@ def countStatesPlot():
     f.close()
     sorted_states = sorted(statehist.items(),key=operator.itemgetter(1),reverse=True)
     #print(sorted_states)
+    #[('NY', 82606), ('NJ', 9710),
+    counts = []
+    states = []
+    for state,count in sorted_states:
+        counts.append(count)
+        states.append(state)
+    #print(counts,states)
     #print(statehist)
     #return json.dumps(sorted_states)   
+    jsdata = {'states':states,'counts':counts}
+    return render_template('statesPlot.html', title='State Plot', data=jsdata,plot='state')
+@app.route('/snowDepthPlot',methods = ['GET','POST'])
+def snowDepthPlot():
+    conn = pymysql.connect(host='mysql.clarksonmsda.org', port=3306, user='ia626',
+                       passwd='ia626clarkson', db='ia626', autocommit=True) #setup our credentials
+    cur = conn.cursor(pymysql.cursors.DictCursor)
+    qyear = request.args.get('year')
+    if qyear is not None:
+        sql = 'SELECT * FROM `conlontj_snow` WHERE YEAR(`Date`) = %s ORDER BY `Date`';
+        cur.execute(sql,(qyear))
+    else:
+        sql = 'SELECT * FROM `conlontj_snow` ORDER BY `Date`';
+        cur.execute(sql)
+    jsx = []
+    jsy = []
+    
+    for row in cur:
+        jsx.append(row['Date'])
+        jsy.append(row['Depth'])
+    jsdata = {'x':jsx,'y':jsy}
+    return render_template('snowPlot.html', title='Snow Plot', data=jsdata,plot='snow')
 
-    return render_template('statesPlot.html', title='State Plot', states=sorted_states)  
+@app.route('/snowDepthForm')
+def snowDepthForm():
+    conn = pymysql.connect(host='mysql.clarksonmsda.org', port=3306, user='ia626',
+                       passwd='ia626clarkson', db='ia626', autocommit=True) #setup our credentials
+    cur = conn.cursor(pymysql.cursors.DictCursor)
+    sql = 'SELECT YEAR(`Date`) AS `years` FROM `conlontj_snow` GROUP BY YEAR(`Date`) ORDER BY `Date`;'
+    cur.execute(sql)
+    years = []
+    for row in cur:
+        years.append(row['years'])
+        
+    return render_template('snowForm.html', title='Filter data',years=years)
+
 @app.route('/csv')  
 def download_csv():  
     csv = 'a,b,c\n1,2,3\n'  

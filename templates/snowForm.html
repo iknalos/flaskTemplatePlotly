@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+	
+	
+	<form action="snowDepthPlot" method="GET">
+		<select name="year">
+			{% for y in years %}
+				<option value="{{ y }}">Show year: {{ y }}</option>
+			{% endfor %}
+		</select>
+		<input type="submit" value="Show plot"/>
+	</form>
+	
+{% endblock %}

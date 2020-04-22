@@ -15,10 +15,11 @@
         {% block content %}{% endblock %}
     </body>
 	<script>
+	{% if plot == 'state' %}
 		var data = [{
-			  values: [1,5,6],
-			  labels: ['Residential', 'Non-Residential', 'Utility'],
-			  type: 'pie'
+			  y:  {{ data.counts|tojson|safe }},
+			  x:  {{ data.states|tojson|safe }},
+			  type: 'bar'
 			}];
 
 			var layout = {
@@ -27,6 +28,22 @@
 			};
 
 			Plotly.newPlot('myDiv', data, layout);
-	  
+	 {% endif %}
+	 
+	 {% if plot == 'snow' %}
+			var trace1 = {
+			  x:  {{ data.x|tojson|safe }},
+			  y:  {{ data.y|tojson|safe }},
+			  type: 'scatter'
+			};
+		var data = [trace1];
+		
+			var layout = {
+			  height: 500,
+			  width: 800
+			};
+
+			Plotly.newPlot('myDiv', data, layout);
+	 {% endif %}
 	  </script>
 </html>
