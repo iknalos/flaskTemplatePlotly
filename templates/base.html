@@ -30,7 +30,7 @@
 			Plotly.newPlot('myDiv', data, layout);
 	 {% endif %}
 	 
-	 {% if plot == 'snow' %}
+	 {% if plot == 'Cases' %}
 			var trace1 = {
 			  x:  {{ data.x|tojson|safe }},
 			  y:  {{ data.y|tojson|safe }},

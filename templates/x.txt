@@ -1,0 +1,4 @@
+update productprice 
+set productpricetype =' sales'
+where product key <=24
+and productprice <30
